@@ -42,3 +42,5 @@ if (holeElement.classList.contains("hole_has-mole")) {
 
 };
 }
+
+document.getElementB
