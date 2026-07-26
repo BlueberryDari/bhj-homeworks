@@ -16,9 +16,60 @@ class Game {
     this.lossElement.textContent = 0;
   }
 
+  let intervalId = null;   
+  let timeLimit = 0; 
+
   registerEvents() {
-    /*
-      TODO:
+    
+    
+    document.addEventListener("keyup", (evt) => {
+      if (evt.key.length > 1) return;
+const necessarySymbol = this.currentSymbol.textContent.toLowerCase();
+
+    const typedSymbol = evt.key.toLowerCase();
+
+    if (necessarySymbol === typedSymbol) {
+     this.success();
+    } else {
+      this.fail();
+    }
+    })
+    
+   
+
+    function startTimer() {
+    if (intervalId) {
+      clearInterval(intervalId);
+    }
+
+    const timerElem = document.getElementById("timer");
+    const word = this.getWord();
+    const wordSymbols = word.length;
+
+    if (wordSymbols === 0) {
+    console.warn("getWord() вернула пустую строку");
+    timeLimit = 0;
+    timerElem.textContent = "0";
+    return;
+    }
+    timeLimit = wordSymbols;
+    timerElem.textContent = timeLimit;
+
+function decrease() {
+    
+    timeLimit--;
+    timerElem.textContent = timeLimit; //перезаписываем уменьшенное время
+if (timeLimit <= 0) {
+clearInterval(intervalId);
+intervalId = null;
+timerElem.textContent = "0";
+alert("Время вышло!!!(-_-)");
+}
+}
+
+const intervalId = setInterval(decrease, 1000);
+  };
+     /* TODO:
       Написать обработчик события, который откликается
       на каждый введённый символ.
       В случае правильного ввода символа вызываем this.success()
@@ -56,6 +107,8 @@ class Game {
     const word = this.getWord();
 
     this.renderWord(word);
+    startTimer();
+
   }
 
   getWord() {

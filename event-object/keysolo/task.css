@@ -11,3 +11,8 @@
   color: #fff;
 }
 
+#timer {
+    font-size: 2em;
+    color: green;
+    transition: color 0.3s;
+}
