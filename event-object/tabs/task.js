@@ -2,7 +2,7 @@ const blocks = document.querySelectorAll(".tabs");
 
 blocks.forEach(block => {
   const tabsCollection = document.querySelectorAll(".tab");
-  const contentsCollection = document.querySelector(".tab__content");
+  const contentsCollection = document.querySelectorAll(".tab__content");
 
   tabsCollection.forEach((tab, index) => {
     tabsCollection.forEach(t => t.classList.remove("tab_active"));

@@ -18,9 +18,9 @@ class Game {
       this.intervalId = null;
     }
 
-    this.setNewWord();
     this.winsElement.textContent = 0;
     this.lossElement.textContent = 0;
+    this.setNewWord();
   }
 
  
