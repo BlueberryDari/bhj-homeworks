@@ -1,7 +1,7 @@
 const sizes = document.querySelectorAll(".font-size");
 const book = document.querySelector(".book");
-const backgrounds = document.querySelector("[data-bg-color]");
-const fontColors = document.querySelector("[data-text-color]");
+const backgrounds = document.querySelectorAll("[data-bg-color]");
+const fontColors = document.querySelectorAll("[data-text-color]");
 
 sizes.forEach((size, index) => {
     //size.classList.remove("font-size_active");
