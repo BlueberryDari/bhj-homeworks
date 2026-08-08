@@ -1,35 +1,39 @@
-const intervalId = setInterval(changeText, 1000);
 const rotatorBlocks = document.querySelectorAll(".rotator");
-
-
 
 rotatorBlocks.forEach(rotator => {
 
-const rotatorItems = document.querySelectorAll(".rotator__case");
-if (rotatorBlocks.length === 0) return;
-let current = 0;
-
-const activeIndex = Array.from(rotator).findIndex(item => {
-    item.classList.contains("rotator__case_active");
-    });
-
-if (activeIndex !== -1) {
-    current = activeIndex;
+const rotatorItems = rotator.querySelectorAll(".rotator__case");
+if (rotatorItems.length === 0) return;
+let currentEl = rotator.querySelector(".rotator__case_active");
+if (!currentEl) {
+    currentEl = rotator.firstElementChild;
+    currentEl.classList.add("rotator__case_active");
 }
 
-rotatorItems[current].style.color = rotatorItems[current].dataset.color;
+rotatorItems.forEach(item => {item.classList.remove("rotator__case_active")
+}); //удаляем все активные, как примитивный способ не искать активный эл-т
+
+
+
+currentEl.style.color = currentEl.dataset.color;
+
 function switchToNext() {
-    rotatorItems[current].classList.remove("rotator__case_active");
+    currentEl.classList.remove("rotator__case_active");
+    currentEl.style.color = "";
 
-    current = (current++) % rotatorBlocks.length; //целочисленный остаток будет current, последний index ++ -остаток 0
-    const nextItem = rotatorItems[current];
-    nextItem.classList.add("rotator__case_active"); //теперь след эл-т активный, предыдущий не активный
-    nextItem.style.color = nextItem.dataset.color;
+    let nextEl = currentEl.nextElementSibling; 
+     if (currentEl.nextElementSibling === null) {
+        nextEl = rotator.firstElementChild;
+    }
 
-setTimeout(switchToNext, nextItem.dataset.speed); // каждый раз запускаем timeout 1 раз, каждый раз вызывая ф-ю
+    nextEl.classList.add("rotator__case_active"); //теперь след эл-т активный, предыдущий не активный
+    nextEl.style.color = nextEl.dataset.color;
+    currentEl = nextEl;
+
+setTimeout(switchToNext, Number(nextEl.dataset.speed) || 1000); // каждый раз запускаем timeout 1 раз, каждый раз вызывая ф-ю
 }
 
-setTimeout(switchToNext, rotatorItems[current].dataset.speed);
+setTimeout(switchToNext,Number(currentEl.dataset.speed) || 1000);
 });
 
 
