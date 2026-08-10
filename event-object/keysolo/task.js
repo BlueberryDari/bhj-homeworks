@@ -76,7 +76,7 @@ class Game {
     this.losses += 1;
     this.lossElement.textContent = this.losses;
 
-    if (this.losses >= 5) {
+    if (this.losses >= 3) {
       alert('Вы проиграли!');
       this.reset();
       return;
