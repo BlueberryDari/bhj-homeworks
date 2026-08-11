@@ -8,7 +8,7 @@ sizes.forEach((size, index) => {
 
     size.addEventListener('click', (evt)  => {
         evt.preventDefault(); // т.к. ссылки, нам нужно, чтобы не переходил браузер по ссылкам
-        sizes.forEach(bth => btn.classList.remove("font-size_active"));
+        sizes.forEach(btn => btn.classList.remove("font-size_active"));
 
         size.classList.add("font-size_active");
         book.classList.remove("book_fs-big", "book_fs-small");
@@ -56,7 +56,7 @@ fontColors.forEach(fontColor => {
         const colorValue = fontColor.dataset.textColor;
 
         if (colorValue) {
-          book.classList.add(`book_color-${bgValue}`); // динамичная переменная в обратных ковычках, чтобы не прописывать каждый if
+          book.classList.add(`book_color-${colorValue}`); // динамичная переменная в обратных ковычках, чтобы не прописывать каждый if
         };
 
     });
