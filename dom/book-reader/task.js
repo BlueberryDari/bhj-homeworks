@@ -28,10 +28,9 @@ sizes.forEach((size, index) => {
 
 backgrounds.forEach(background => {
     
-
     background.addEventListener('click', (evt)  => {
         evt.preventDefault(); // т.к. ссылки, нам нужно, чтобы не переходил браузер по ссылкам
-        backgrounds.forEach(bth => btn.classList.remove("color_active"));
+        backgrounds.forEach(btn => btn.classList.remove("color_active"));
 
         background.classList.add("color_active");
         book.classList.remove("book_bg-gray", "book_bg-black", "book_bg-white");
@@ -47,17 +46,16 @@ backgrounds.forEach(background => {
 
 fontColors.forEach(fontColor => {
     
-
     fontColor.addEventListener('click', (evt)  => {
         evt.preventDefault(); // т.к. ссылки, нам нужно, чтобы не переходил браузер по ссылкам
-        fontColors.forEach(bth => btn.classList.remove("color_active"));
+        fontColors.forEach(btn => btn.classList.remove("color_active"));
 
         fontColor.classList.add("color_active");
         book.classList.remove("book_color-gray", "book_color-whitesmoke", "book_color-black");
 
         const colorValue = fontColor.dataset.textColor;
 
-        if (textColor) {
+        if (colorValue) {
           book.classList.add(`book_color-${bgValue}`); // динамичная переменная в обратных ковычках, чтобы не прописывать каждый if
         };
 
