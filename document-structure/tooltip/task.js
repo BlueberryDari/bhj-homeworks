@@ -1,4 +1,4 @@
-const hintedLinks = document.getElementsByClassName('has-tooltip');
+const hintedLinks = Array.from(document.getElementsByClassName('has-tooltip'));
 const hint = document.createElement('div');
 hint.classList.add('tooltip');
 const body = document.getElementsByTagName('body')[0];
@@ -9,34 +9,64 @@ hintedLinks.forEach(link => {
 link.addEventListener('click', e => {
     e.preventDefault();
 
-   if (link.getAttribute('title') === hint.innerText) {
-    link.classList.toggle('tooltip_active');
-   }
+    hintedLinks.forEach(l => l.classList.remove('tooltip_active'));
+    link.classList.add('tooltip_active');
 
-   link.classList.add('tooltip_active');
-   hint.innerText = link.getAttribute('title');
+    const titleText = link.getAttribute('title');
 
-   hint.style = `left: ${getLinkPosition.left}, top: ${getLinkPosition.top}`
-  })
-})
+   if (titleText) {
+    hint.innerText = titleText;
+    } else {
+        return;
+    }
+
+   hint.classList.add('tooltip_active');  
+
+   const position = getLinkPosition(link);
+   hint.style.left = position.left + 'px';
+   hint.style.top = position.top + 'px';
+ 
+  });
+});
 
 function getLinkPosition(link) {
     const linkSize = link.getBoundingClientRect();
-    const linkDataPosition = link.dataset.position;
     const hintSize = hint.getBoundingClientRect();
+    const linkDataPosition = link.dataset.position;
 
     switch(linkDataPosition) {
         case 'right':
-            return {left: linkSize.right + 5, top: linkSize.top};
+            return {
+                left: linkSize.right + 5, 
+                top: linkSize.top
+            };
             break;
+
         case 'left':
-            return {left: linkSize.left - hintSize.width, top: linkSize.top};
+            return {
+                left: linkSize.left - hintSize.width - 5, 
+                top: linkSize.top
+            };
             break; 
+
         case 'top':
-            return {left: linkSize.left, top: linkSize.top - 30};
+            return {
+                left: linkSize.left, 
+                top: linkSize.top - hintSize.height - 5
+            };
+            break;
+
+        case 'bottom':
+            return {
+                left:linkSize.left, 
+                top: linkSize.bottom + 5
+            };
             break;
         default:
-            return {left:linkSize.left, top: linkSize.top + 30};
+            return {
+                left:linkSize.left, 
+                top: linkSize.bottom + 5
+            };
             break;
     }
 } 
