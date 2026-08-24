@@ -22,10 +22,8 @@ const fetchPollData = (url, callback) => {
 
 
 const renderPollMarkup = (questionnaireData) => {
-  const pollBox = document.querySelector('.poll');
   const pollQuestionEl = document.querySelector('.poll__title');
   const pollAnswersBox = document.querySelector('.poll__answers');
-
 
   const question = questionnaireData.data.title;
   const answers = questionnaireData.data.answers;
@@ -41,9 +39,11 @@ const renderPollMarkup = (questionnaireData) => {
 
     pollAnswersBox.appendChild(btnOption);
 
-    btnOption.addEventListener('click', () =>
-      alert("Спасибо, ваш голос засчитан!")
-    )
+    btnOption.addEventListener('click', () => {
+      alert("Спасибо, ваш голос засчитан!");
+      loadAndRender('https://students.netoservices.ru/nestjs-backend/poll');
+    }
+  )
   }
 };
 
@@ -58,7 +58,7 @@ const loadAndRender = (url) => {
       return;
 
     }
-    renderPollMarkup(questionnaireData);
+  renderPollMarkup(questionnaireData);
   });
 }
 
@@ -69,3 +69,5 @@ const init = () => {
 
 document.addEventListener('DOMContentLoaded', init);
 
+/* init загружает запрос на сервер, потом отображение вопроса, 
+в самом опроснике зашит переход на новый запрос на сервер и новое отображение при ответе*/
