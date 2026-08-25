@@ -3,16 +3,15 @@
 const urlRequest = 'https://students.netoservices.ru/nestjs-backend/poll';
 const pollQuestionEl = document.querySelector('.poll__title');
 const pollAnswersBox = document.querySelector('.poll__answers');
-      
-   
+
+
 const loadAndRender = (url) => {
   fetchPollData(url, (err, questionnaireData) => {
     if (err) {
       console.log(err);
       return;
-
     }
-  renderPollMarkup(questionnaireData);
+    renderPollMarkup(questionnaireData);
   });
 };
 
@@ -39,7 +38,7 @@ const fetchPollData = (url, callback) => {
 
 
 const renderPollMarkup = (questionnaireData) => {
-  
+
   const question = questionnaireData.data.title;
   const answers = questionnaireData.data.answers;
   const pollId = questionnaireData.id;
@@ -48,16 +47,16 @@ const renderPollMarkup = (questionnaireData) => {
   pollAnswersBox.innerHTML = '';
 
 
-  answers.forEach((answer, index) => { 
-    
+  answers.forEach((answer, index) => {
+
     const btnOption = document.createElement('button');
     btnOption.classList.add('poll__answer');
     btnOption.textContent = answer;
-    
+
     btnOption.setAttribute('data-poll-id', pollId);
     btnOption.setAttribute('data-answer-index', index);
-  
-    btnOption.addEventListener('click', function() {
+
+    btnOption.addEventListener('click', function () {
       handleVote(this); // кнопка сама, возможно, нужно не через стрелочную
     });
 
@@ -66,31 +65,30 @@ const renderPollMarkup = (questionnaireData) => {
 };
 
 
-    function handleVote(buttonEl) {
-      alert("Спасибо, ваш голос засчитан!");
-      //loadAndRender(urlRequest);
-      const voteId = buttonEl.getAttribute('data-poll-id');
-      const answerIndex = buttonEl.getAttribute('data-answer-index');
-      getStats(voteId, answerIndex, (err, statData) => {
-        if (err) {
-          console.error(err);
-          loadAndRender(urlRequest);
-          return;
-        }
-        
-        renderStatMarkup(statData); 
-        loadAndRender(urlRequest);
-      });
-    };
+function handleVote(buttonEl) {
+  alert("Спасибо, ваш голос засчитан!");
+  //loadAndRender(urlRequest);
+  const voteId = buttonEl.getAttribute('data-poll-id');
+  const answerIndex = buttonEl.getAttribute('data-answer-index');
+  getStats(voteId, answerIndex, (err, statData) => {
+    if (err) {
+      console.error(err);
+      loadAndRender(urlRequest);
+      return;
+    }
+    renderStatMarkup(statData);
+    loadAndRender(urlRequest);
+  });
+};
 
 
 const getStats = (questionId, answerIndex, callback) => {
-const xhr = new XMLHttpRequest();
-const parametr = `vote=${questionId}&answer=${answerIndex}`;
+  const xhr = new XMLHttpRequest();
+  const parametr = `vote=${questionId}&answer=${answerIndex}`;
 
-xhr.open('POST',  urlRequest );
-xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-xhr.onload = () => {
+  xhr.open('POST', urlRequest);
+  xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  xhr.onload = () => {
     if (xhr.status === 200) {
       const statData = JSON.parse(xhr.responseText);
       callback(null, statData);
@@ -101,7 +99,7 @@ xhr.onload = () => {
   xhr.onerror = () => {
     callback(new Error('ошибка, не достигли сервиса'), null);
   };
-xhr.send (parametr);
+  xhr.send(parametr);
 };
 
 
