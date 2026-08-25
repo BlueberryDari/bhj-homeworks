@@ -74,8 +74,10 @@ const renderPollMarkup = (questionnaireData) => {
       getStats(voteId, answerIndex, (err, statData) => {
         if (err) {
           console.error(err);
+          loadAndRender(urlRequest);
           return;
         }
+        
         renderStatMarkup(statData); 
         loadAndRender(urlRequest);
       });
